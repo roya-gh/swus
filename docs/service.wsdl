@@ -1,0 +1,74 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="swus"
+ targetNamespace="http://api.ametisco.ir/swus.wsdl"
+ xmlns:tns="http://api.ametisco.ir/swus.wsdl"
+ xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+ xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+ xmlns:ns="urn:swus"
+ xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/"
+ xmlns:MIME="http://schemas.xmlsoap.org/wsdl/mime/"
+ xmlns:DIME="http://schemas.xmlsoap.org/ws/2002/04/dime/wsdl/"
+ xmlns:WSDL="http://schemas.xmlsoap.org/wsdl/"
+ xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<types>
+
+ <schema targetNamespace="urn:swus"
+  xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:ns="urn:swus"
+  xmlns="http://www.w3.org/2001/XMLSchema"
+  elementFormDefault="unqualified"
+  attributeFormDefault="unqualified">
+  <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+ </schema>
+
+</types>
+
+<message name="loginRequest">
+  <part name="username" type="xsd:string"/>
+  <part name="password" type="xsd:string"/>
+</message>
+
+<message name="loginResponse">
+  <part name="success" type="xsd:boolean"/>
+  <part name="errorCode" type="xsd:integer"/>
+  <part name="errorString" type="xsd:string"/>
+  <part name="token" type="xsd:string"/>
+  <part name="ttl" type="xsd:integer"/>
+</message>
+
+<portType name="swusPortType">
+ <operation name="login">
+  <documentation>Service definition of function ns__add</documentation>
+  <input message="tns:loginRequest"/>
+  <output message="tns:loginResponse"/>
+ </operation>
+</portType>
+
+<binding name="swus" type="tns:swusPortType">
+ <SOAP:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+ <operation name="login">
+  <SOAP:operation style="rpc" soapAction=""/>
+  <input>
+     <SOAP:body use="encoded" namespace="urn:swus" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+  </input>
+  <output>
+     <SOAP:body use="encoded" namespace="urn:swus" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+  </output>
+ </operation>
+</binding>
+
+<service name="swus">
+ <documentation>gSOAP 2.7.9k generated service definition</documentation>
+ <port name="swus" binding="tns:swus">
+  <SOAP:address location="http://api.ametisco.ir:39000"/>
+ </port>
+</service>
+
+</definitions>
