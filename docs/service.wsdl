@@ -26,32 +26,46 @@
   elementFormDefault="unqualified"
   attributeFormDefault="unqualified">
   <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
- </schema>
-
+  
+<element name="loginRequestElement">
+    <complexType>
+        <sequence>
+            <element name="username" type="xsd:string"></xsd:element>
+            <element name="password" type="xsd:string"></xsd:element>
+        </sequence>
+    </complexType>
+</element>
+  
+<element name="loginResponseElement">
+    <complexType>
+        <sequence>
+            <element name="success" type="xsd:boolean"></xsd:element>
+            <element name="errorCode" type="xsd:integer"></xsd:element>
+            <element name="errorString" type="xsd:string"></xsd:element>
+            <element name="token" type="xsd:string"></xsd:element>
+            <element name="ttl" type="xsd:integer"></xsd:element>
+        </sequence>
+    </complexType>
+</element> 
+</schema>
 </types>
 
 <message name="loginRequest">
-  <part name="username" type="xsd:string"/>
-  <part name="password" type="xsd:string"/>
+    <part name="parameters" element="swus:loginRequestElement"/>
 </message>
 
 <message name="loginResponse">
-  <part name="success" type="xsd:boolean"/>
-  <part name="errorCode" type="xsd:integer"/>
-  <part name="errorString" type="xsd:string"/>
-  <part name="token" type="xsd:string"/>
-  <part name="ttl" type="xsd:integer"/>
+    <part name="parameters" element="swus:loginResponseElement"/>
 </message>
 
 <portType name="swusPortType">
  <operation name="login">
-  <documentation>Service definition of function ns__add</documentation>
-  <input message="tns:loginRequest"/>
-  <output message="tns:loginResponse"/>
+  <input message="swus:loginRequest"/>
+  <output message="swus:loginResponse"/>
  </operation>
 </portType>
 
-<binding name="swus" type="tns:swusPortType">
+<binding name="swus" type="swus:swusPortType">
  <SOAP:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
  <operation name="login">
   <SOAP:operation style="rpc" soapAction=""/>
@@ -65,8 +79,7 @@
 </binding>
 
 <service name="swus">
- <documentation>gSOAP 2.7.9k generated service definition</documentation>
- <port name="swus" binding="tns:swus">
+ <port name="swus" binding="swus:swus">
   <SOAP:address location="http://api.ametisco.ir:39000"/>
  </port>
 </service>
